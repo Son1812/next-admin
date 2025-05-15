@@ -15,6 +15,28 @@ export const NAV_DATA = [
         ],
       },
       {
+        title: "Connections",
+        icon: Icons.ConnectionPointTwo,
+        items: [
+          {
+            title: "Connections",
+            url: "/connections/connections",
+          },
+          {
+            title: "Sources",
+            url: "/connections/sources",
+          },
+          {
+            title: "Distination",
+            url: "/connections/distination",
+          },
+          {
+            title: "Health",
+            url: "/connections/health",
+          },
+        ],
+      },
+      {
         title: "Calendar",
         url: "/calendar",
         icon: Icons.Calendar,
