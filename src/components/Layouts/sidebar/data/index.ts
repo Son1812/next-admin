@@ -86,8 +86,14 @@ export const NAV_DATA = [
     ],
   },
   {
-    label: "OTHERS",
+    label: "SETTING SYSTEM",
     items: [
+      {
+        title: "Permission",
+        url: "/permission",
+        icon: Icons.Shield,
+        items: [],
+      },
       {
         title: "Charts",
         icon: Icons.PieChart,
