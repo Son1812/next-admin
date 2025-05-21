@@ -95,6 +95,12 @@ export const NAV_DATA = [
         items: [],
       },
       {
+        title: "Users",
+        url: "/user",
+        icon: Icons.Users,
+        items: [],
+      },
+      {
         title: "Charts",
         icon: Icons.PieChart,
         items: [
