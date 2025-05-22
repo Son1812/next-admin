@@ -1,6 +1,7 @@
 import "@/css/satoshi.css";
 import "@/css/style.css";
 import "@/style/index.scss"
+import "@/style/dialog.scss"
 
 import { Sidebar } from "@/components/Layouts/sidebar";
 
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <div className="w-full bg-gray-2 dark:bg-[#020d1a]">
               <Header />
 
-              <main className="isolate mx-auto w-full max-w-screen-2xl overflow-hidden p-2" style={{height:"calc(100vh - 58px)"}}>
+              <main className="isolate mx-auto w-full max-w-screen-2xl overflow-hidden px-2 pt-2" style={{height:"calc(100vh - 58px)"}}>
                 {children}
               </main>
             </div>

@@ -1,9 +1,9 @@
 'use client'
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Tag, Dropdown, MenuProps, Button } from 'antd';
 import type { TableProps } from 'antd';
 import type {UserList} from '../types/types'
-
+import { MoreOutlined, DownOutlined } from '@ant-design/icons';
 
 
 interface ListResultProps {
@@ -43,15 +43,42 @@ const columns: TableProps<UserList>['columns'] = [
     align:'left'
   },
   {
-    title: 'Action',
+    title: 'Tác vụ',
     key: 'action',
-    render: (_: unknown, record: UserList) => (
-      <Space size="middle">
-        <a>Delete</a>
-      </Space>
-    ),
+    width:'120',
+    render: (_, record) => {
+      const items: MenuProps['items'] = [
+        {
+          key: 'detail',
+          label: 'Xem chi tiết',
+          onClick: () => viewDetail(record),
+        },
+        {
+          key: 'change-password',
+          label: 'Đổi mật khẩu',
+          onClick: () => changePassword(record),
+        },
+      ];
+
+      return (
+        
+        <Dropdown.Button menu={{ items }} trigger={['click']} type='primary' icon={<DownOutlined />}>
+          Tác vụ
+        </Dropdown.Button>
+      );
+    },
   },
 ];
+
+const viewDetail = (record: UserList) => {
+  console.log('Xem chi tiết:', record);
+  // mở modal hoặc chuyển trang
+};
+
+const changePassword = (record: UserList) => {
+  console.log('Đổi mật khẩu cho:', record);
+  // mở modal đổi mật khẩu
+};
 
 
 
