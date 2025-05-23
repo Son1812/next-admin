@@ -1,15 +1,20 @@
 'use client';
 import React, { useState } from 'react';
-import { Modal, Form, Input, Select, message, Button } from 'antd';
+import { Modal, Form, Input, Select, message, Button, Switch } from 'antd';
+import {ListGroup, ListProject} from '@/features/user/types/types'
 //import { createUser } from '../services/userService';
+
+const { Option } = Select;
 
 interface CreateUserModalProps {
   open: boolean;
   onClose: () => void;
   onSuccess?: () => void; // gọi khi tạo thành công để refresh dữ liệu
+  listProject: ListProject[];
+  listGroup: ListGroup[];
 }
 
-const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess }) => {
+const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess, listProject, listGroup }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -48,10 +53,23 @@ const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess }
       okText="Tạo mới"
       cancelText="Hủy"
     >
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="horizontal" labelCol={{ flex: '120px' }} labelAlign="left">
+      <Form.Item
+          label="Dự án"
+          name="projectId"
+          rules={[{ required: true, message: 'Vui lòng chọn dự án!' }]}
+        >
+          <Select>
+            {listProject.map((project) => (
+              <Option key={project.id} value={project.id}>
+                {project.projectName}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
         <Form.Item
-          label="Tên"
-          name="name"
+          label="Tên người dùng"
+          name="username"
           rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
         >
           <Input />
@@ -65,10 +83,23 @@ const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess }
         </Form.Item>
         <Form.Item
           label="Nhóm quyền"
-          name="group"
+          name="groupId"
           rules={[{ required: true, message: 'Chọn nhóm!' }]}
         >
-          <Select options={[{ value: 'admin', label: 'Admin' }, { value: 'user', label: 'User' }]} />
+          <Select>
+            {listGroup.map((project) => (
+              <Option key={project.id} value={project.id}>
+                {project.groupName}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Trạng thái"
+          name="status"
+          valuePropName="checked"
+        >
+          <Switch />
         </Form.Item>
       </Form>
     </Modal>

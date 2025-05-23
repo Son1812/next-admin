@@ -1,28 +1,32 @@
-import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
+import axios, {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig
+} from 'axios'
 import { Modal } from 'antd'
 import Router from 'next/router'
-import { getToken, removeToken } from '@/modules/Auth/utils/auth'
-import { TOKEN_HEADER_KEY } from './constants'
+import { getToken, removeToken } from '@/utils/storage'
+import { TOKEN_HEADER_KEY } from '@/utils/constants'
 
 const AUTH_ERROR_CODE = 401
 const AUTH_EXPIRED_MESSAGE = 'Hết phiên đăng nhập'
 
 // Create Axios instance
 const service = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // e.g., "https://api.example.com"
-  timeout: 600000 // 10 minutes
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  timeout: 600000
 })
 
-// Request interceptor
+// ✅ Request interceptor
 service.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = getToken()
 
     if (token && config.headers) {
       config.headers[TOKEN_HEADER_KEY] = `Bearer ${token}`
     }
 
-    if (config.headers) {
+    if (config.headers && !config.headers['Content-Type']) {
       config.headers['Content-Type'] = 'application/json'
     }
 
@@ -34,7 +38,7 @@ service.interceptors.request.use(
   }
 )
 
-// Response interceptor
+// ✅ Response interceptor
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response
@@ -57,14 +61,13 @@ service.interceptors.response.use(
   }
 )
 
-// Handle auth token expiration
 function handleAuthExpired() {
   Modal.warning({
     title: 'Thông báo',
     content: AUTH_EXPIRED_MESSAGE,
     onOk: () => {
       removeToken()
-      Router.replace('/login') // hoặc window.location.href = '/login'
+      Router.replace('/login')
     }
   })
 }

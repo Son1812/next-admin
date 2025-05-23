@@ -1,5 +1,5 @@
 import request from './request';
-import { PATHS as API_PATHS } from '@/services/api/constants';
+import { PATHS as API_PATHS } from './constants-path';
 
 type PathVariables = Record<string, string | number>;
 type Params = Record<string, any> | null;

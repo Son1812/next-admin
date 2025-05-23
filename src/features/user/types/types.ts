@@ -25,3 +25,11 @@ export interface ListProject {
   id: string;
   projectName: string;
 }
+
+export interface CreateUser {
+  projectId: string,
+  username: string,
+  email: string,
+  groupId: string,
+  status:boolean
+}

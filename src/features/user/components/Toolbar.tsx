@@ -107,6 +107,8 @@ const Toolbar: React.FC<Props> = ({ formData, listGroup, listProject , onSearch,
       <CreateUserDialog
         open={isOpenDialog}
         onClose={() => setOpenDialog(false)}
+        listProject={listProject}
+        listGroup={listGroup}
       />
     </div>
   );
