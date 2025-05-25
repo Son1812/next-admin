@@ -2,10 +2,9 @@
 import React, { useState } from 'react';
 import { Modal, Form, Input, Select, message, Button, Switch } from 'antd';
 import {ListGroup, ListProject} from '@/features/user/types/types'
-//import { createUser } from '../services/userService';
+import {useCreateUser} from '@/features/user/hooks/useUser';
 
 const { Option } = Select;
-
 interface CreateUserModalProps {
   open: boolean;
   onClose: () => void;
@@ -17,24 +16,15 @@ interface CreateUserModalProps {
 const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess, listProject, listGroup }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const { mutate: createUser, isPending} = useCreateUser();
 
   const submitClick = async () => {
-    // try {
-    //   const values = await form.validateFields();
-    //   setLoading(true);
-    //   await createUser(values);
-    //   message.success('Tạo người dùng thành công!');
-    //   setLoading(false);
-    //   form.resetFields();
-    //   onClose();
-    //   onSuccess?.(); // Gọi callback nếu có
-    // } catch (error: any) {
-    //   setLoading(false);
-    //   message.error('Tạo thất bại. Vui lòng thử lại!');
-    //   console.error('Create user failed:', error);
-    // }
-    console.log("Create user");
-    
+    try {
+      const formData = await form.validateFields();
+      createUser(formData)
+    } catch (error) {
+      
+    }
   };
 
   const cancelClick = () => {
@@ -53,7 +43,15 @@ const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess, 
       okText="Tạo mới"
       cancelText="Hủy"
     >
-      <Form form={form} layout="horizontal" labelCol={{ flex: '120px' }} labelAlign="left">
+      <Form 
+        form={form} 
+        layout="horizontal" 
+        labelCol={{ flex: '120px'}} 
+        labelAlign="left"
+        initialValues={{
+          status: true, // mặc định Switch là true
+        }}
+      >
       <Form.Item
           label="Dự án"
           name="projectId"
@@ -99,7 +97,7 @@ const CreateUser: React.FC<CreateUserModalProps> = ({ open, onClose, onSuccess, 
           name="status"
           valuePropName="checked"
         >
-          <Switch />
+          <Switch disabled />
         </Form.Item>
       </Form>
     </Modal>

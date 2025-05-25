@@ -7,6 +7,8 @@ export function createUser(data: CreateUser) {
     ...data,
     status: mapStatusToEnum(data.status),
   };
+  console.log('data', payload, data);
+  
 
   return post(PATHS.USER.add, payload);
 }
