@@ -3,7 +3,7 @@ import React from 'react';
 import { Space, Table, Tag, Dropdown, MenuProps, Button } from 'antd';
 import type { TableProps } from 'antd';
 import type {UserList} from '../types/types'
-import { MoreOutlined, DownOutlined } from '@ant-design/icons';
+import {  DownOutlined, LockOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
 
 interface ListResultProps {
@@ -51,11 +51,13 @@ const columns: TableProps<UserList>['columns'] = [
         {
           key: 'detail',
           label: 'Xem chi tiết',
+          icon: <InfoCircleOutlined />,
           onClick: () => viewDetail(record),
         },
         {
           key: 'change-password',
           label: 'Đổi mật khẩu',
+          icon: <LockOutlined />,
           onClick: () => changePassword(record),
         },
       ];
